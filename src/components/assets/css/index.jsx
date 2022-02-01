@@ -4,15 +4,17 @@ export const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
-
+    
     body {
         background-color: #8C11BE;
-
+        
         font-family: Raleway;
     }
-
+    
     input {
-        width: 95%;
+        all: unset;
+        box-sizing: border-box;
+
         height: 58px;
 
         background-color: white;
@@ -23,8 +25,9 @@ export const GlobalStyle = createGlobalStyle`
 
         border-radius: 5px;
 
+        padding-left: 15px;
+        
         ::placeholder {
-            padding-left: 15px;
 
             color: black;
             font-size: 20px;
@@ -41,13 +44,22 @@ export const GlobalStyle = createGlobalStyle`
         text-align: center;
     }
 
-    p .title {
+    .my-wallet {
+        color: white;
+        font-family: Saira Stencil One;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 50px;
+        text-align: center;
+    }
+
+    .title {
         color: white;
         font-size: 26px;
         font-weight: 700;
     }
 
-    p .generic {
+    p {
         color: white;
         font-size: 15px;
         font-weight: 700;
