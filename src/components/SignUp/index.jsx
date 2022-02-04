@@ -11,8 +11,9 @@ import { useState } from "react";
 export default function SignUp() {
 
     const navigate = useNavigate()
-    
+
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState('')
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(signUpSchema),
@@ -22,26 +23,28 @@ export default function SignUp() {
 
         setLoading(true)
 
-            if(data.password !== data.confirmPassword) {
-                alert('A senha esta diferente da confirmação!')
-                return
-            } else {
-                delete data.confirmPassword
-            }
+        if (data.password !== data.confirmPassword) {
+            alert('A senha esta diferente da confirmação!')
+            return
+        } else {
+            delete data.confirmPassword
+        }
 
-            axios.post('http://localhost:5000/cadastrar', data)
+        axios.post('http://localhost:5000/cadastrar', data)
             .then(resp => {
-                console.log(resp)
-            
-                navigate('/registros')
+                console.log(resp.data)
+                setUser(resp.data)
+                navigate('/')
+                console.log(user)
             })
-            .catch(() => {
-                alert('Verifique os dados informados')
+            .catch(error => {
+                alert(error.response.data)
                 setLoading(false)
             })
-            
+
     }
-    
+
+
     return (
         <DivSignUp>
             <p className="my-wallet">MyWallet</p>
@@ -55,7 +58,7 @@ export default function SignUp() {
                 <p>{errors.password?.message}</p>
                 <input {...register('confirmPassword')} type="password" name="confirmPassword" placeholder="Confirme a senha" />
                 <p>{errors.confirmPassword?.message}</p>
-                <Loader loading={loading} value='Cadastrar'/>
+                <Loader loading={loading} value='Cadastrar' />
             </FormSignUp>
 
             <p onClick={() => navigate('/')}>Já tem uma conta? Entre agora!</p>

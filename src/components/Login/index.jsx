@@ -1,39 +1,49 @@
 import styled from "styled-components"
-import axios from "axios"
 import Loader from "../Generic/Loader"
 import loginSchema from "../Generic/ValidationLogin"
+import useAuth from "../../hooks/useAuth"
+import api from "../../services/api"
 
 import { useForm } from 'react-hook-form'
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 
 export default function Login() {
 
     const navigate = useNavigate()
-
     const [loading, setLoading] = useState(false)
-    
+    const { auth, login } = useAuth()
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     })
 
-    function handleLogin(data) {
+    useEffect(() => {
+        if (auth && auth.token) {
+            navigate('/registros')
+        }
+    }, [auth, navigate])
+
+    async function handleLogin(data) {
 
         setLoading(true)
 
-        axios.post('http://localhost:5000/', data)
-            .then(resp => {
-                console.log(resp)
+        try {
+            const promisse = await api.login(data);
+            setLoading(false);
+            login(promisse.data);
+            navigate("/registros");
             
-                navigate('/registros')
-            })
-            .catch(() => {
-                alert('Verifique os dados informados')
-                setLoading(false)
-            })
+        } catch (error) {
+            setLoading(false);
+
+            alert('Erro, tente novamente');
+        }
 
     }
+
+    console.log(login)
+    console.log(auth)
 
     return (
         <DivLogin>
@@ -44,7 +54,7 @@ export default function Login() {
                 <p>{errors.email?.message}</p>
                 <input {...register('password')} type="password" name="password" placeholder="Senha" />
                 <p>{errors.password?.message}</p>
-                <Loader loading={loading} value='Entrar'/>
+                <Loader loading={loading} value='Entrar' />
             </FormLogin>
 
             <p onClick={() => navigate('/cadastrar')}>Primeira vez? Cadastre-se!</p>

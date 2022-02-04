@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from '../../contexts/AuthContext'
 
 import Login from '../Login'
 import Main from '../Main'
@@ -9,15 +10,16 @@ import { GlobalStyle } from '../assets/css'
 
 export default function App() {
     return (
-
-        <BrowserRouter>
-            <ResetStyle />
-            <GlobalStyle />
-            <Routes>
-                <Route path='/' element={<Login />} />
-                <Route path='/cadastrar' element={<SignUp />} />
-                <Route path='/registros' element={<Main />} />
-            </Routes>
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <ResetStyle />
+                <GlobalStyle />
+                <Routes>
+                    <Route path='/' element={<Login />} />
+                    <Route path='/cadastrar' element={<SignUp />} />
+                    <Route path='/registros' element={<Main />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
