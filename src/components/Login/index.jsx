@@ -20,7 +20,7 @@ export default function Login() {
 
     useEffect(() => {
         if (auth && auth.token) {
-            navigate('/registros')
+            navigate('/carteira')
         }
     }, [auth, navigate])
 
@@ -32,18 +32,14 @@ export default function Login() {
             const promisse = await api.login(data);
             setLoading(false);
             login(promisse.data);
-            navigate("/registros");
+            navigate("/carteira");
             
         } catch (error) {
             setLoading(false);
-
-            alert('Erro, tente novamente');
+            alert(error.response.data);
         }
 
     }
-
-    console.log(login)
-    console.log(auth)
 
     return (
         <DivLogin>

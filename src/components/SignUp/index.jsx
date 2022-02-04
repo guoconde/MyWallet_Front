@@ -1,7 +1,7 @@
-import axios from "axios"
 import styled from "styled-components"
 import signUpSchema from "../Generic/ValidationRegister";
 import Loader from "../Generic/Loader";
+import api from "../../services/api";
 
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
@@ -13,13 +13,12 @@ export default function SignUp() {
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState('')
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(signUpSchema),
     })
 
-    function handleSignUp(data) {
+    async function handleSignUp(data) {
 
         setLoading(true)
 
@@ -30,18 +29,15 @@ export default function SignUp() {
             delete data.confirmPassword
         }
 
-        axios.post('http://localhost:5000/cadastrar', data)
-            .then(resp => {
-                console.log(resp.data)
-                setUser(resp.data)
-                navigate('/')
-                console.log(user)
-            })
-            .catch(error => {
-                alert(error.response.data)
-                setLoading(false)
-            })
+        try {
+            await api.signUp(data);
+            setLoading(false);
+            navigate('/')
 
+        } catch (error) {
+            setLoading(false);
+            alert(error.response.data);
+        }
     }
 
 

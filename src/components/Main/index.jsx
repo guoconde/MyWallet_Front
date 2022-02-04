@@ -1,21 +1,51 @@
 import styled from "styled-components"
+import useAuth from "../../hooks/useAuth"
+import api from "../../services/api"
+
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Main() {
+
+    const navigate = useNavigate()
+
+    const { auth } = useAuth()
+    const [user, setUser] = useState('')
+
+    async function loadWallet() {
+        try {
+            const promisse = await api.getInputsAndOutputs(auth)
+
+            setUser(promisse.data)
+
+        } catch (error) {
+            alert('Por favor faça o login novamente')
+            navigate('/')
+        }
+    }
+
+    useEffect(() => {
+        loadWallet()
+        // eslint-disable-next-line
+    }, [])
+
+
+
     return (
         <DivMain>
             <DivHeader>
-                <header className="title">Olá, Fulano</header>
+                <header className="title">Olá, {user.name}</header>
                 <ion-icon name="log-out-outline"></ion-icon>
             </DivHeader>
             <DivRegisters>
                 Não há registros de entrada ou saída
             </DivRegisters>
             <DivButtons>
-                <div>
+                <div onClick={() => navigate('/entrada')}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <p>Nova entrada</p>
                 </div>
-                <div>
+                <div onClick={() => navigate('/saida')}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova saída</p>
                 </div>

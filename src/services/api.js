@@ -1,19 +1,35 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:5000/'
+const BASE_URL = 'http://localhost:5000'
 
-// function creatConfig(token) {
-//     return { headers: { Authorization: `Bearer ${token}` } }
-// }
+function createConfig(token) {
+    return { headers: { authorization: `Bearer ${token}` } }
+}
 
 function login(data) {
-    const promise = axios.post(`${BASE_URL}`, data);
+    const promise = axios.post(`${BASE_URL}/`, data);
+
+    return promise;
+}
+
+function signUp(data) {
+    const promise = axios.post(`${BASE_URL}/cadastrar`, data);
+
+    return promise;
+}
+
+function getInputsAndOutputs(token) {
+    const config = createConfig(token);
+
+    const promise = axios.get(`${BASE_URL}/carteira`, config);
 
     return promise;
 }
 
 const api = {
-    login
+    login,
+    signUp,
+    getInputsAndOutputs
 }
 
 export default api
