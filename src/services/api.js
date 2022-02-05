@@ -18,18 +18,36 @@ function signUp(data) {
     return promise;
 }
 
-function getInputsAndOutputs(token) {
+function getUser(token) {
+    const config = createConfig(token);
+    
+    const promise = axios.get(`${BASE_URL}/carteira`, config);
+    
+    return promise;
+}
+
+function postInputsAndOutputs(data, token) {
     const config = createConfig(token);
 
-    const promise = axios.get(`${BASE_URL}/carteira`, config);
+    const promise = axios.post(`${BASE_URL}/saida`, data, config);
 
+    return promise;
+}
+
+function getInputsAndOutputs(token) {
+    const config = createConfig(token);
+    
+    const promise = axios.get(`${BASE_URL}/saida`, config);
+    
     return promise;
 }
 
 const api = {
     login,
     signUp,
-    getInputsAndOutputs
+    getUser,
+    getInputsAndOutputs,
+    postInputsAndOutputs
 }
 
 export default api

@@ -46,7 +46,7 @@ export default function SignUp() {
             <p className="my-wallet">MyWallet</p>
 
             <FormSignUp onSubmit={handleSubmit(data => handleSignUp(data))}>
-                <input {...register('name')} type="name" name="name" placeholder="Nome" />
+                <input {...register('name')} type="text" name="name" placeholder="Nome" />
                 <p>{errors.name?.message}</p>
                 <input {...register('email')} type="email" name="email" placeholder="E-mail" />
                 <p>{errors.email?.message}</p>

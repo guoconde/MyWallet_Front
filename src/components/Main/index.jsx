@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
+import Wallet from "./Wallet"
 
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -11,12 +12,17 @@ export default function Main() {
 
     const { auth } = useAuth()
     const [user, setUser] = useState('')
+    const [registers, setRegisters] = useState()
 
     async function loadWallet() {
         try {
-            const promisse = await api.getInputsAndOutputs(auth)
+            const promisse = await api.getUser(auth)
+            // const wallet = await api.getInputsAndOutputs(auth)
 
-            setUser(promisse.data)
+            console.log(promisse.data)
+            setUser(promisse.data.user)
+            setRegisters(promisse.data.wallet)
+            // console.log(wallet)
 
         } catch (error) {
             alert('Por favor faça o login novamente')
@@ -38,7 +44,7 @@ export default function Main() {
                 <ion-icon name="log-out-outline"></ion-icon>
             </DivHeader>
             <DivRegisters>
-                Não há registros de entrada ou saída
+                <Wallet wallet={registers} />
             </DivRegisters>
             <DivButtons>
                 <div onClick={() => navigate('/entrada')}>

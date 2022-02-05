@@ -1,12 +1,42 @@
 import styled from "styled-components"
+import inputOutputSchema from "../Generic/validationInputAndOutput"
+import api from "../../services/api"
+import useAuth from "../../hooks/useAuth"
+
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useNavigate } from "react-router-dom"
 
 export default function NewOutput() {
+
+    const navigate = useNavigate()
+    const { auth } = useAuth()
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(inputOutputSchema),
+    })
+
+    async function handleOutput(data) {
+
+        let newData = { ...data, type: 'output' }
+
+        try {
+            await api.postInputsAndOutputs(newData, auth);
+            navigate('/carteira')
+
+        } catch (error) {
+            alert(error.response.data);
+        }
+    }
+
     return (
         <DivNewOutput>
             <p className="title">Nova saída</p>
-            <FormNewOutput>
-                <input type="text" placeholder="Valor" />
-                <input type="text" placeholder="Descrição" />
+            <FormNewOutput onSubmit={handleSubmit(data => handleOutput(data))}>
+                <input {...register('values')} type="number" step="0.01" min='0' name="values" placeholder="Valor" />
+                <p>{errors.values?.message}</p>
+                <input {...register('description')} type="text" name="description" placeholder="Descrição" />
+                <p>{errors.description?.message}</p>
                 <input type="submit" value="Salvar saída" />
             </FormNewOutput>
         </DivNewOutput>
