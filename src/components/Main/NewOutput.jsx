@@ -6,10 +6,21 @@ import useAuth from "../../hooks/useAuth"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function NewOutput() {
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+        if (!localStorage.getItem('auth')) {
+            alert('Por favor faça o login novamente')
+            navigate('/')
+        }
+        // eslint-disable-next-line
+    }, [])
+
     const { auth } = useAuth()
 
     const { register, handleSubmit, formState: { errors } } = useForm({

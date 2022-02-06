@@ -17,12 +17,9 @@ export default function Main() {
     async function loadWallet() {
         try {
             const promisse = await api.getUser(auth)
-            // const wallet = await api.getInputsAndOutputs(auth)
 
-            console.log(promisse.data)
             setUser(promisse.data.user)
             setRegisters(promisse.data.wallet)
-            // console.log(wallet)
 
         } catch (error) {
             alert('Por favor faça o login novamente')
@@ -35,13 +32,16 @@ export default function Main() {
         // eslint-disable-next-line
     }, [])
 
-
+    function logout() {
+        localStorage.removeItem('auth')
+        navigate('/')
+    }
 
     return (
         <DivMain>
             <DivHeader>
                 <header className="title">Olá, {user.name}</header>
-                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-icon name="log-out-outline" onClick={logout}></ion-icon>
             </DivHeader>
             <DivRegisters>
                 <Wallet wallet={registers} />
@@ -87,7 +87,7 @@ const DivHeader = styled.div`
 
 const DivRegisters = styled.div`
     width: 100%;
-    height: 74vh;
+    height: 73vh;
 
     background-color: white;
 
@@ -95,13 +95,10 @@ const DivRegisters = styled.div`
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    text-align: center;
     color: #868686;
 `
 
