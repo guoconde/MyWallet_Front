@@ -44,7 +44,7 @@ export default function Main() {
                 <ion-icon name="log-out-outline" onClick={logout}></ion-icon>
             </DivHeader>
             <DivRegisters>
-                <Wallet wallet={registers} />
+                <Wallet wallet={registers} loadWallet={loadWallet}/>
             </DivRegisters>
             <DivButtons>
                 <div onClick={() => navigate('/entrada')}>

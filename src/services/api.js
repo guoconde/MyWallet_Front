@@ -34,20 +34,20 @@ function postInputsAndOutputs(data, token) {
     return promise;
 }
 
-function getInputsAndOutputs(token) {
+function deleteValue(id, token) {
     const config = createConfig(token);
-    
-    const promise = axios.get(`${BASE_URL}/saida`, config);
-    
+  
+    const promise = axios.delete(`${BASE_URL}/carteira/${id}`, config);
+  
     return promise;
-}
+  }
 
 const api = {
     login,
     signUp,
     getUser,
-    getInputsAndOutputs,
-    postInputsAndOutputs
+    postInputsAndOutputs,
+    deleteValue
 }
 
 export default api

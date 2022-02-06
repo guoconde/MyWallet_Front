@@ -1,6 +1,10 @@
 import styled from "styled-components"
+import useAuth from "../../hooks/useAuth"
+import api from "../../services/api"
 
-export default function Wallet({ wallet }) {
+export default function Wallet({ wallet, loadWallet }) {
+
+    const { auth } = useAuth()
 
     if (!wallet) {
         return (
@@ -17,7 +21,7 @@ export default function Wallet({ wallet }) {
             </DivReturn>
         )
     }
-    
+
     function filterItems() {
         
         let filterInputs = 0
@@ -36,9 +40,22 @@ export default function Wallet({ wallet }) {
         return result
     }
 
-    function deleteItem(id) {
-        console.log(id)
+    async function deleteItem(id) {
+        
+        try {
+            console.log('aqui')
+            console.log(auth)
+            await api.deleteValue(id, auth);
+
+            const isConfirmed = window.confirm('Você realmente deseja deletar este registro?')
+
+            if(isConfirmed) loadWallet()
+
+        } catch (error) {
+            alert(error.response.data);
+        }
     }
+
     
     let isReturn = filterItems().toLocaleString('pt-BR', { minimumFractionDigits: 2 })
     
