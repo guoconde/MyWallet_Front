@@ -5,12 +5,13 @@ import useAuth from "../../hooks/useAuth"
 
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export default function NewOutput() {
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
 
@@ -27,12 +28,26 @@ export default function NewOutput() {
         resolver: yupResolver(inputOutputSchema),
     })
 
+    
     async function handleOutput(data) {
-
+        
         let newData = { ...data, type: 'output' }
+        let path = 'saida'
 
         try {
-            await api.postInputsAndOutputs(newData, auth, 'saida');
+
+            if (!location.state) {
+                await api.postInputsAndOutputs(newData, auth, path);
+            } else {
+                const changePath = window.confirm('Você gostaria de mudar o registro para entrada?')
+                if (changePath) {
+                    path = 'entrada'
+                    newData.type = 'input'
+                }
+                const isConfirm = window.confirm('Você realmente deseja alterar este registro?')
+                isConfirm && await api.updateRegistry(location.state.id, auth, path, newData)
+            }
+
             navigate('/carteira')
 
         } catch (error) {
@@ -40,13 +55,16 @@ export default function NewOutput() {
         }
     }
 
+    const defaultValues = !location.state ? '' : location.state.values
+    const defaultDescription = !location.state ? '' : location.state.description
+
     return (
         <DivNewOutput>
             <p className="title">Nova saída</p>
             <FormNewOutput onSubmit={handleSubmit(data => handleOutput(data))}>
-                <input {...register('values')} type="number" step="0.01" min='0' name="values" placeholder="Valor" />
+                <input {...register('values')} type="number" step="0.01" min='0' name="values" placeholder="Valor" defaultValue={defaultValues} />
                 <p>{errors.values?.message}</p>
-                <input {...register('description')} type="text" name="description" placeholder="Descrição" />
+                <input {...register('description')} type="text" name="description" placeholder="Descrição" defaultValue={defaultDescription}/>
                 <p>{errors.description?.message}</p>
                 <input type="submit" value="Salvar saída" />
             </FormNewOutput>

@@ -56,7 +56,7 @@ export default function Wallet({ wallet, loadWallet }) {
         }
     }
 
-    function updateItem(id, type) {
+    function updateItem({ _id, type, values, description }) {
         
         if(type === 'input') {
             type = 'entrada'
@@ -65,12 +65,11 @@ export default function Wallet({ wallet, loadWallet }) {
         }
 
         navigate(`/${type}`, { state: {
-            id: id,
+            id: _id,
+            values: values,
+            description,
           }
         })
-        // console.log(auth)
-        // await api.updateRegistry(id, auth, type)
-
     }
 
     
@@ -81,7 +80,7 @@ export default function Wallet({ wallet, loadWallet }) {
             {wallet.map((w, i) =>
                 <DivMap key={i}>
                     <div className="date">{w.date}</div>
-                    <div className="description" onClick={() => updateItem(w._id, w.type)} >{w.description}</div>
+                    <div className="description" onClick={() => updateItem(w)} >{w.description}</div>
                     <DivValues className="values" typeColor={w.type} >{w.values.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</DivValues>
                     <div className="delete" onClick={() => deleteItem(w._id)} >x</div>
                 </DivMap>
