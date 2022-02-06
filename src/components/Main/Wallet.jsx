@@ -2,9 +2,12 @@ import styled from "styled-components"
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
 
+import { useNavigate } from "react-router-dom"
+
 export default function Wallet({ wallet, loadWallet }) {
 
     const { auth } = useAuth()
+    const navigate = useNavigate()
 
     if (!wallet) {
         return (
@@ -43,17 +46,31 @@ export default function Wallet({ wallet, loadWallet }) {
     async function deleteItem(id) {
         
         try {
-            console.log('aqui')
-            console.log(auth)
-            await api.deleteValue(id, auth);
+            await api.deleteRegistry(id, auth);
 
             const isConfirmed = window.confirm('Você realmente deseja deletar este registro?')
-
             if(isConfirmed) loadWallet()
 
         } catch (error) {
             alert(error.response.data);
         }
+    }
+
+    function updateItem(id, type) {
+        
+        if(type === 'input') {
+            type = 'entrada'
+        } else {
+            type = 'saida'
+        }
+
+        navigate(`/${type}`, { state: {
+            id: id,
+          }
+        })
+        // console.log(auth)
+        // await api.updateRegistry(id, auth, type)
+
     }
 
     
@@ -64,7 +81,7 @@ export default function Wallet({ wallet, loadWallet }) {
             {wallet.map((w, i) =>
                 <DivMap key={i}>
                     <div className="date">{w.date}</div>
-                    <div className="description">{w.description}</div>
+                    <div className="description" onClick={() => updateItem(w._id, w.type)} >{w.description}</div>
                     <DivValues className="values" typeColor={w.type} >{w.values.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</DivValues>
                     <div className="delete" onClick={() => deleteItem(w._id)} >x</div>
                 </DivMap>

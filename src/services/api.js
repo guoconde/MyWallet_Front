@@ -20,34 +20,43 @@ function signUp(data) {
 
 function getUser(token) {
     const config = createConfig(token);
-    
+
     const promise = axios.get(`${BASE_URL}/carteira`, config);
-    
-    return promise;
-}
-
-function postInputsAndOutputs(data, token) {
-    const config = createConfig(token);
-
-    const promise = axios.post(`${BASE_URL}/saida`, data, config);
 
     return promise;
 }
 
-function deleteValue(id, token) {
+function postInputsAndOutputs(data, token, path) {
     const config = createConfig(token);
-  
+
+    const promise = axios.post(`${BASE_URL}/${path}`, data, config);
+
+    return promise;
+}
+
+function deleteRegistry(id, token) {
+    const config = createConfig(token);
+
     const promise = axios.delete(`${BASE_URL}/carteira/${id}`, config);
-  
+
     return promise;
-  }
+}
+
+function updateRegistry(id, token, path, data) {
+    const config = createConfig(token);
+
+    const promise = axios.put(`${BASE_URL}/${path}/${id}`, data ,config);
+
+    return promise;
+}
 
 const api = {
     login,
     signUp,
     getUser,
     postInputsAndOutputs,
-    deleteValue
+    deleteRegistry,
+    updateRegistry
 }
 
 export default api

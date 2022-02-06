@@ -32,7 +32,7 @@ export default function NewOutput() {
         let newData = { ...data, type: 'output' }
 
         try {
-            await api.postInputsAndOutputs(newData, auth);
+            await api.postInputsAndOutputs(newData, auth, 'saida');
             navigate('/carteira')
 
         } catch (error) {

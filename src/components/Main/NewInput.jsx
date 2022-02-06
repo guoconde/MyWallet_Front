@@ -5,12 +5,14 @@ import api from "../../services/api"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export default function NewInput() {
     
     const navigate = useNavigate()
+    const location = useLocation()
+    console.log(location)
 
     useEffect(() => {
 
@@ -32,9 +34,14 @@ export default function NewInput() {
         let newData = { ...data, type: 'input' }
 
         try {
-            await api.postInputsAndOutputs(newData, auth);
-            navigate('/carteira')
 
+            if(!location.state) {
+                await api.postInputsAndOutputs(newData, auth, 'entrada');
+            } else {
+                await api.updateRegistry(location.state.id, auth, 'entrada', newData)
+            }
+            
+            navigate('/carteira')
         } catch (error) {
             alert(error.response.data);
         }
