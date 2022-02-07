@@ -41,6 +41,8 @@ export default function NewOutput() {
 
         setLoading(true)
 
+        data.values.toLocaleString('en-US')
+
         let newData = { ...data, type: 'output' }
         let path = 'saida'
 
@@ -109,7 +111,7 @@ export default function NewOutput() {
                 <input {...register('description')} type="text" name="description" autoComplete="off" placeholder="Descrição" defaultValue={defaultDescription} />
                 <p>{errors.description?.message}</p>
                 <Loader loading={loading} value='Salvar saída' />
-                <button onClick={() => navigate(-1)}>Voltar</button>
+                <div className="back-button" onClick={() => navigate(-1)}>Voltar</div>
             </FormNewOutput>
         </DivNewOutput>
     )

@@ -33,9 +33,9 @@ export default function Wallet({ wallet, loadWallet }) {
 
         for (let w of wallet) {
             if (w.type === 'input') {
-                filterInputs += w.values
+                filterInputs += parseFloat(w.values)
             } else {
-                filterOutputs += w.values
+                filterOutputs += parseFloat(w.values)
             }
         }
 
@@ -89,7 +89,7 @@ export default function Wallet({ wallet, loadWallet }) {
         })
     }
 
-    let isReturn = filterItems().toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+    let isReturn = filterItems().toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
     return (
         <DivWallet>
@@ -97,7 +97,7 @@ export default function Wallet({ wallet, loadWallet }) {
                 <DivMap key={i}>
                     <div className="date">{w.date}</div>
                     <div className="description" onClick={() => updateItem(w)} >{w.description}</div>
-                    <DivValues className="values" typeColor={w.type} >{w.values.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</DivValues>
+                    <DivValues className="values" typeColor={w.type} >{parseFloat(w.values).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</DivValues>
                     <div className="delete" onClick={() => deleteItem(w._id)} >x</div>
                 </DivMap>
             )}
