@@ -13,7 +13,7 @@ export default function Wallet({ wallet, loadWallet }) {
     if (!wallet) {
         return (
             <DivReturn>
-                Não há registros de entrada ou saída
+                
             </DivReturn>
         )
     }
