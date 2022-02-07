@@ -25,7 +25,7 @@
 
 ### Projeto Finalizado:
 
-<img src='https://raw.githubusercontent.com/guoconde/API_BatePapo_UOL/main/assets/projeto_12_API_Chat-UOL.gif'/>
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/my_wallet.gif'/>
 
 ### Link Deploy:
 
@@ -41,14 +41,15 @@
   <a href="https://www.linux.org/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> 
   <a href="https://nodejs.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> 
   <a href="https://www.mongodb.com/pt-br" target="_blank"> <img src="https://icongr.am/devicon/mongodb-original-wordmark.svg?size=128&color=currentColor" alt="mongodb" width="40" height="40"/> </a> 
+  <a href="https://expressjs.com/pt-br/" target="_blank"> <img src="https://icongr.am/devicon/express-original-wordmark.svg?size=128&color=currentColor" alt="express" width="40" height="40"/> </a> 
 </p>
 
-## Available Scripts
+## Available Scripts:
 
 In the project directory, you can run:
 
--Firt clone this repository
+- First clone this repository
 
--Run npm i
+- Run npm i
 
--Run npm start
+- Run npm start
