@@ -4,6 +4,7 @@ import Swal from "sweetalert2"
 
 import { useNavigate } from "react-router-dom"
 import { DivMap, DivResult, DivReturn, DivValues, DivWallet } from "./MainCss"
+import { ThreeDots } from "react-loader-spinner"
 
 export default function Wallet({ wallet, loadWallet }) {
 
@@ -13,7 +14,7 @@ export default function Wallet({ wallet, loadWallet }) {
     if (!wallet) {
         return (
             <DivReturn>
-                <img src="https://loading.io/asset/548129" alt="loading" />
+                <ThreeDots type="ThreeDots" color="#8c11be" height={80} width={80} />
             </DivReturn>
         )
     }
