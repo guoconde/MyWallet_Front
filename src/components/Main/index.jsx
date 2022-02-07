@@ -1,10 +1,11 @@
-import styled from "styled-components"
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
 import Wallet from "./Wallet"
+import Swal from "sweetalert2"
 
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { DivButtons, DivHeader, DivMain, DivRegisters } from "./MainCss"
 
 export default function Main() {
 
@@ -17,12 +18,15 @@ export default function Main() {
     async function loadWallet() {
         try {
             const promisse = await api.getUser(auth)
-
             setUser(promisse.data.user)
             setRegisters(promisse.data.wallet)
 
         } catch (error) {
-            alert('Por favor faça o login novamente')
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor faça o login novamente',
+            })
             navigate('/')
         }
     }
@@ -32,9 +36,22 @@ export default function Main() {
         // eslint-disable-next-line
     }, [])
 
-    function logout() {
-        localStorage.removeItem('auth')
-        navigate('/')
+    async function logout() {
+
+        await Swal.fire({
+            title: 'Você realmente gostaria de deslogar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#03AC00',
+            cancelButtonColor: '#C70000',
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('auth')
+                navigate('/')
+            }
+        })
     }
 
     return (
@@ -44,7 +61,7 @@ export default function Main() {
                 <ion-icon name="log-out-outline" onClick={logout}></ion-icon>
             </DivHeader>
             <DivRegisters>
-                <Wallet wallet={registers} loadWallet={loadWallet}/>
+                <Wallet wallet={registers} loadWallet={loadWallet} />
             </DivRegisters>
             <DivButtons>
                 <div onClick={() => navigate('/entrada')}>
@@ -59,82 +76,3 @@ export default function Main() {
         </DivMain>
     )
 }
-
-const DivMain = styled.div`
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-
-    padding: 25px;
-`
-
-const DivHeader = styled.div`
-    width: 100%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    ion-icon {
-        font-size: 30px;
-        --ionicon-stroke-width: 40px;
-        color: white;
-    }
-`
-
-const DivRegisters = styled.div`
-    width: 100%;
-    height: 73vh;
-
-    background-color: white;
-
-    border-radius: 5px;
-
-    display: flex;
-    flex-direction: column;
-
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 23px;
-    color: #868686;
-`
-
-const DivButtons = styled.div`
-    width: 100%;
-    height: 120px;
-    
-    display: flex;
-    gap: 15px;
-    
-    div{
-        width: 100%;
-        
-        background-color: #A328D6;
-        
-        border-radius: 5px;
-        
-        padding: 15px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        p {
-            width: 50%;
-
-            font-size: 17px;
-            font-weight: 700;
-            line-height: 20px;
-            text-align: left;
-        }
-
-        ion-icon {
-            font-size: 25px;
-            color: white;
-        }
-    }
-
-`

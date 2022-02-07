@@ -6,7 +6,7 @@ export default function Loader({ loading, value }) {
 
     return (
         loading === false ?
-        <input type="submit" value={value} /> :
+            <input type="submit" value={value} /> :
             <DivLoader>
                 <ThreeDots type="ThreeDots" color="white" height={80} width={80} />
             </DivLoader>

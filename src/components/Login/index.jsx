@@ -3,6 +3,7 @@ import Loader from "../Generic/Loader"
 import loginSchema from "../Generic/ValidationLogin"
 import useAuth from "../../hooks/useAuth"
 import api from "../../services/api"
+import Swal from "sweetalert2"
 
 import { useForm } from 'react-hook-form'
 import { useNavigate } from "react-router-dom"
@@ -36,7 +37,11 @@ export default function Login() {
             
         } catch (error) {
             setLoading(false);
-            alert(error.response.data);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${error.response.data}`,
+            })
         }
 
     }
@@ -46,9 +51,9 @@ export default function Login() {
             <p className="my-wallet">MyWallet</p>
 
             <FormLogin onSubmit={handleSubmit(data => handleLogin(data))}>
-                <input {...register('email')} type="email" name="email" placeholder="E-mail" />
+                <input {...register('email')} type="email" autoComplete="off" name="email" placeholder="E-mail" />
                 <p>{errors.email?.message}</p>
-                <input {...register('password')} type="password" name="password" placeholder="Senha" />
+                <input {...register('password')} type="password" autoComplete="off" name="password" placeholder="Senha" />
                 <p>{errors.password?.message}</p>
                 <Loader loading={loading} value='Entrar' />
             </FormLogin>

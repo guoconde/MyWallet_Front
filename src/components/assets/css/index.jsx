@@ -11,7 +11,8 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Raleway;
     }
     
-    input {
+    input,
+    button {
         all: unset;
         box-sizing: border-box;
 
@@ -35,13 +36,18 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    input[type=submit] {
+    input[type=submit],
+    button {
         background-color: #A328D6;
 
         color: white;
         font-size: 20px;
         font-weight: 700;
         text-align: center;
+    }
+
+    button {
+        margin-top: 5px;
     }
 
     .my-wallet {

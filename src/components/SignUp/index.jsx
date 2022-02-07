@@ -2,6 +2,7 @@ import styled from "styled-components"
 import signUpSchema from "../Generic/ValidationRegister";
 import Loader from "../Generic/Loader";
 import api from "../../services/api";
+import Swal from "sweetalert2";
 
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
@@ -23,7 +24,11 @@ export default function SignUp() {
         setLoading(true)
 
         if (data.password !== data.confirmPassword) {
-            alert('A senha esta diferente da confirmação!')
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'A senha esta diferente da confirmação!',
+            })
             return
         } else {
             delete data.confirmPassword
@@ -36,7 +41,11 @@ export default function SignUp() {
 
         } catch (error) {
             setLoading(false);
-            alert(error.response.data);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${error.response.data}`,
+            })
         }
     }
 
@@ -46,9 +55,9 @@ export default function SignUp() {
             <p className="my-wallet">MyWallet</p>
 
             <FormSignUp onSubmit={handleSubmit(data => handleSignUp(data))}>
-                <input {...register('name')} type="text" name="name" placeholder="Nome" />
+                <input {...register('name')} type="text" autoComplete="off" name="name" placeholder="Nome" />
                 <p>{errors.name?.message}</p>
-                <input {...register('email')} type="email" name="email" placeholder="E-mail" />
+                <input {...register('email')} type="email" autoComplete="off" name="email" placeholder="E-mail" />
                 <p>{errors.email?.message}</p>
                 <input {...register('password')} type="password" name="password" placeholder="Senha" />
                 <p>{errors.password?.message}</p>
