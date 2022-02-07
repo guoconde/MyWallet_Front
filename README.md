@@ -14,7 +14,12 @@
 
 <p>
 
-<img src='https://raw.githubusercontent.com/guoconde/API_BatePapo_UOL/main/assets/projeto_12.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/input.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/login.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/output.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/register.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/wallet.png' width='200px' />
+<img src='https://raw.githubusercontent.com/guoconde/MyWallet_Front/main/src/components/assets/images/wallet_2.png' width='200px' />
 
 </p>
 
