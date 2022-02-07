@@ -13,7 +13,7 @@ export default function Wallet({ wallet, loadWallet }) {
     if (!wallet) {
         return (
             <DivReturn>
-                
+                <img src="https://loading.io/asset/548129" alt="loading" />
             </DivReturn>
         )
     }
