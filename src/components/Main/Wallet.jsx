@@ -4,7 +4,7 @@ import Swal from "sweetalert2"
 
 import { useNavigate } from "react-router-dom"
 import { DivMap, DivResult, DivReturn, DivValues, DivWallet } from "./MainCss"
-import { Circles } from "react-loader-spinner"
+import { ThreeDots } from "react-loader-spinner"
 
 export default function Wallet({ wallet, loadWallet }) {
 
@@ -14,7 +14,7 @@ export default function Wallet({ wallet, loadWallet }) {
     if (!wallet) {
         return (
             <DivReturn>
-                <Circles ariaLabel="loading-indicator" color="#8c11be" height={80} width={80} />
+                <ThreeDots type="ThreeDots" color="#8c11be" height={80} width={80} />
             </DivReturn>
         )
     }
