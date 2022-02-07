@@ -17,7 +17,7 @@ export default function Wallet({ wallet, loadWallet }) {
             </DivReturn>
         )
     }
-    
+
     if (wallet.length === 0) {
         return (
             <DivReturn>
@@ -27,10 +27,10 @@ export default function Wallet({ wallet, loadWallet }) {
     }
 
     function filterItems() {
-        
+
         let filterInputs = 0
         let filterOutputs = 0
-        
+
         for (let w of wallet) {
             if (w.type === 'input') {
                 filterInputs += w.values
@@ -38,19 +38,30 @@ export default function Wallet({ wallet, loadWallet }) {
                 filterOutputs += w.values
             }
         }
-        
+
         let result = filterInputs - filterOutputs
-        
+
         return result
     }
 
     async function deleteItem(id) {
-        
-        try {
-            await api.deleteRegistry(id, auth);
 
-            const isConfirmed = window.confirm('Você realmente deseja deletar este registro?')
-            if(isConfirmed) loadWallet()
+        try {
+
+            await Swal.fire({
+                title: 'Você realmente deseja deletar este registro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#03AC00',
+                cancelButtonColor: '#C70000',
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.deleteRegistry(id, auth);
+                    loadWallet()
+                }
+            })
 
         } catch (error) {
             Swal.fire({
@@ -62,23 +73,24 @@ export default function Wallet({ wallet, loadWallet }) {
     }
 
     function updateItem({ _id, type, values, description }) {
-        
-        if(type === 'input') {
+
+        if (type === 'input') {
             type = 'entrada'
         } else {
             type = 'saida'
         }
 
-        navigate(`/${type}`, { state: {
-            id: _id,
-            values: values,
-            description,
-          }
+        navigate(`/${type}`, {
+            state: {
+                id: _id,
+                values: values,
+                description,
+            }
         })
     }
-    
+
     let isReturn = filterItems().toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-    
+
     return (
         <DivWallet>
             {wallet.map((w, i) =>

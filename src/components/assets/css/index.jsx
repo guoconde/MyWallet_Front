@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     input,
-    button {
+    div.back-button {
         all: unset;
         box-sizing: border-box;
 
@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     input[type=submit],
-    button {
+    div.back-button {
         background-color: #A328D6;
 
         color: white;
@@ -46,7 +46,10 @@ export const GlobalStyle = createGlobalStyle`
         text-align: center;
     }
 
-    button {
+    div.back-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 5px;
     }
 

@@ -108,7 +108,7 @@ export default function NewInput() {
                 <input {...register('description')} type="text" name="description" autoComplete="off" placeholder="Descrição" defaultValue={defaultDescription} />
                 <p>{errors.description?.message}</p>
                 <Loader loading={loading} value='Salvar entrada' />
-                <button onClick={() => navigate(-1)}>Voltar</button>
+                <div className="back-button" onClick={() => navigate(-1)}>Voltar</div>
             </FormNewInput>
         </DivNewInput>
     )
